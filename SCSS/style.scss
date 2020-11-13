@@ -1,0 +1,176 @@
+body{
+    background-image: 
+        linear-gradient(#e8e8e8 1px, transparent 1px),
+        linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
+    background-size: 
+        40px 40px,
+        40px 40px;
+}
+
+.cube-red{
+    background-color: #ff0000;
+    width: 10px;
+    height: 10px;
+}
+
+.cube-blue{
+    background-color:#0000ff;
+    width: 15px;
+    height: 15px;
+}
+
+.cube-green{
+    background-color:#00ff00;
+    width: 20px;
+    height: 20px;
+}
+
+.cube-red,
+.cube-blue,
+.cube-green{
+    display: inline-block;
+    position: absolute;
+}
+
+.description-cubes {	
+
+    &__box{
+        display: flex;
+    }
+
+    &__text{
+        margin: 5px;
+    }
+
+	&__cube {
+        position: relative;
+        margin: 10px;
+	}
+}
+
+.header {
+
+	&__title {
+        margin-bottom: 30px;
+
+        text-transform: uppercase;
+        text-align: left;
+	}
+
+    &__btn {
+        text-transform: uppercase;
+
+        border-radius: 20px;
+        border: 2px solid ;
+
+        width: 150px;
+
+        background-color: #ffffff;
+	}
+
+	&__counters {
+        text-align: center;
+        margin-top: 30px;
+    }
+    
+    &__container{
+        text-align: center;
+    }
+
+	&__logo {
+        margin-top: 30px;
+        width: 100px;
+	}
+}
+
+.counters {
+
+    &__text{
+        min-width: 70px;
+    }
+
+	&__input {
+        min-width: 70px;
+
+        text-align: center;
+	}
+}
+
+.main{
+
+    &__playing-field{
+        position: relative;
+
+        background-color: #ffffff;
+        
+        min-height: 300px;
+        height: calc(100vh - 170px);
+        overflow: hidden;
+    }
+
+    &__left-bar{
+        background-color: #ffffff;
+    }
+
+    &__table{
+
+        th{
+            text-transform: uppercase;
+            color: #777777;
+        }
+
+        td{
+            text-align: center;
+            padding: 5px;
+        }
+
+        td:nth-child(1){
+            text-align: left;
+        }        
+    }
+}
+
+.modal-windov {
+
+    position: fixed;
+    display: none;
+
+    z-index: 9999;
+
+    background-color: rgba(203, 203, 203, 0.433);
+    text-align: center;
+
+    width: 100vw;
+    height: 100vh;
+
+	&__container {
+        background-color: #ffffff;
+
+        width: 300px;
+        height: 230px;
+
+        position: absolute;
+        left: calc(50%  - 151px);
+        top: calc(50% - 151px);
+
+        border: 2px solid ;
+        border-radius: 10px;
+    }
+
+    &__error{
+        color: #ff0000;
+    }
+
+	&__points {
+        margin:20px;
+	}
+
+	&__box {
+        display: inline-flex;
+    }
+    
+	&__name {
+        margin: 5px;
+        font-size: 20px;
+	}
+}
