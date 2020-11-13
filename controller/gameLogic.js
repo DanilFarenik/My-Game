@@ -13,8 +13,6 @@ let randomCube = new RandomCube(x, y);
 const draeing = new Draeing();
 
 function game(e) {
-    console.dir(e.target);
-
     if (e.target.tagName == "DIV") {
 
         points.value = +points.value + cubePoints[e.target.dataset.type]

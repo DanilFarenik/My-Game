@@ -48,9 +48,6 @@ newGame.addEventListener("click", gameRestart)
 
 
 start.addEventListener("click", () => {
-    console.log(flag, "flag");
-    console.log(flagStart, "flagStart");
-
     if (flagStart) {
         flagStart = false;
 
