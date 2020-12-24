@@ -1,10 +1,10 @@
 export default class {
     constructor() {
-        this.names = sessionStorage;
+        this.names = localStorage;
     }
 
     setName(name, points) {
-        sessionStorage[name] = points;
+        localStorage[name] = points;
     }
 }
 

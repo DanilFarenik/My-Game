@@ -69,11 +69,11 @@ start.addEventListener("click", () => {
 
 submit.addEventListener("click", () => {
     if (valid(name.value)) {
-        let obj = { [name.value]: points.value }
+        dataRetrieval.names[name.value] = points.value;
 
         dataRetrieval.setName(name.value, points.value);
 
-        drawingTable(obj);
+        drawingTable(dataRetrieval.names);
 
         modalWindow.close();
 

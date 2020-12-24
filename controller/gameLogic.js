@@ -27,6 +27,8 @@ window.addEventListener("resize", () => {
     x = main.offsetWidth;
     y = main.offsetHeight;
 
+    console.log(x, y);
+
     randomCube = new RandomCube(x, y);
 })
 
@@ -38,9 +40,11 @@ export default class {
 
         playingField.addEventListener("click", game);
     }
+
     play() {
         playingField.addEventListener("click", game);
     }
+
     stop() {
         playingField.removeEventListener("click", game);
     }
