@@ -27,8 +27,6 @@ window.addEventListener("resize", () => {
     x = main.offsetWidth;
     y = main.offsetHeight;
 
-    console.log(x, y);
-
     randomCube = new RandomCube(x, y);
 })
 
