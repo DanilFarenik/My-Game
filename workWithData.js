@@ -35,7 +35,7 @@ module.exports.setRating = item => {
 }
 
 function ratingSort(rating) {
-    return rating.sort((a, b) => a.points - b.points)
+    return rating.sort((a, b) => b.points - a.points)
 }
 
 function setDataFile(rating) {

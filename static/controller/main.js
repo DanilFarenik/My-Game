@@ -20,16 +20,11 @@ let game = new Game();
 let timeSet = new Timer();
 const dataRetrieval = new Data();
 const modalWindow = new Modal();
-//---------------------
-dataRetrieval.getRating();
 
-setTimeout(() => {
-    dataRetrieval.setRating("ewqeqwe3", 58)
 
-}, 1000)
-//---------------------
-
-drawingTable(dataRetrieval.names);
+dataRetrieval.getRating().then(res => {
+    drawingTable(res);
+})
 
 
 let flagStart = true;
@@ -77,9 +72,7 @@ start.addEventListener("click", () => {
 
 submit.addEventListener("click", () => {
     if (valid(name.value)) {
-        dataRetrieval.names[name.value] = points.value;
-
-        dataRetrieval.setRating(name.value, points.value);
+        dataRetrieval.setRating(name.value, Number(points.value));
 
         drawingTable(dataRetrieval.names);
 

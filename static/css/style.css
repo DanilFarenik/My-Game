@@ -1,6 +1,7 @@
 body {
   background-image: linear-gradient(#e8e8e8 1px, transparent 1px), linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
-  background-size: 40px 40px, 40px 40px;
+  background-size: 40px 40px,
+ 40px 40px;
 }
 
 .cube-red {
@@ -94,6 +95,7 @@ body {
 
 .main__table th {
   text-transform: uppercase;
+  text-align: center;
   color: #777777;
 }
 

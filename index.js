@@ -27,7 +27,7 @@ app.get('/getRecords', function (req, res) {
 
     }).catch((err) => {
         res.status = 500;
-        res.send(err);
+        res.json(err);
     })
 });
 
@@ -39,17 +39,17 @@ app.post('/setRecords', function (req, res) {
 
     if (err.status) {
         res.status = 500;
-        res.send(err);
+        res.json(err);
+    } else {
+        data.setRating(req.body).then(response => {
+
+            res.json(response);
+
+        }).catch(err => {
+            res.status = 500;
+            res.json(err);
+        })
     }
-
-    data.setRating(req.body).then(response => {
-
-        res.send(response);
-
-    }).catch(err => {
-        res.status = 500;
-        res.send(err);
-    })
 });
 
 function validator({ name, points }) {
@@ -65,8 +65,15 @@ function validator({ name, points }) {
         err.status = true;
     }
 
+    if (!points) {
+        err.message += 'Points is not defined \n';
+        err.status = true;
+    }
+
+    if (!name) {
+        err.message += 'Name is not defined \n';
+        err.status = true;
+    }
+
     return err;
 }
-
-
-

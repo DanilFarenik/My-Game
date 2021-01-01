@@ -1,22 +1,31 @@
 const table = document.getElementById("table");
 
-export default function (names) {
-    table.innerHTML = "";
+export default function (items) {
+    table.innerHTML = ``;
 
-    let item = Object.entries(names).sort((a, b) => b[1] - a[1]);
+    table.append(
+        generateTag("tr", "th", "points", "name")
+    )
 
-    for (let [key, value] of item) {
-        let tr = document.createElement("tr");
 
-        let tdKey = document.createElement("td");
-        let tdValue = document.createElement("td");
-
-        tdKey.innerText = key;
-        tdValue.innerText = value;
-
-        tr.append(tdKey)
-        tr.append(tdValue)
-
-        if (key.length < 15) table.append(tr);
+    for (let { points, name } of items) {
+        table.append(
+            generateTag("tr", "td", points, name)
+        );
     }
+}
+
+function generateTag(tag, tagChild, points, name) {
+    let element = document.createElement(tag);
+
+    let tdName = document.createElement(tagChild);
+    let tdPoints = document.createElement(tagChild);
+
+    tdName.innerText = name;
+    tdPoints.innerText = points;
+
+    element.append(tdName);
+    element.append(tdPoints);
+
+    return element;
 }
