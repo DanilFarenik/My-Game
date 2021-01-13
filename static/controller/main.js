@@ -1,10 +1,12 @@
+import './entrance.js';
+
 import Data from "../model/nameData.js";
 import Timer from "./timer.js";
 import Modal from "../view/modalWindow.js"
 import Game from "./gameLogic.js";
 
 import drawingTable from "../view/drawingTable.js"
-import valid from "./nameValidator.js";
+//import valid from "./nameValidator.js";
 import timerRes from "../view/timeRestart.js";
 import fieldCleaning from "../view/fieldCleaning.js";
 
@@ -21,6 +23,9 @@ let timeSet = new Timer();
 const dataRetrieval = new Data();
 const modalWindow = new Modal();
 
+const userName = dataRetrieval.getName();
+
+name.value = userName;
 
 dataRetrieval.getRating().then(res => {
     drawingTable(res);
@@ -71,13 +76,13 @@ start.addEventListener("click", () => {
 
 
 submit.addEventListener("click", () => {
-    if (valid(name.value)) {
-        dataRetrieval.setRating(name.value, Number(points.value));
 
-        drawingTable(dataRetrieval.names);
+    dataRetrieval.setRating(userName, Number(points.value));
 
-        modalWindow.close();
+    drawingTable(dataRetrieval.names);
 
-        gameRestart();
-    }
+    modalWindow.close();
+
+    gameRestart();
+
 })

@@ -3,6 +3,13 @@ export default class {
         this.names = [];
     }
 
+    getName() {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + "isAuth".replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
     getRating() {
         return fetch("http://localhost:3000/getRecords")
             .then(res => {
@@ -26,7 +33,7 @@ export default class {
             name: name
         }
 
-        this.names.push(data)
+        addUser(this.names, data)
 
         this.names = this.names.sort((a, b) => b.points - a.points).splice(0, 10);
 
@@ -49,4 +56,21 @@ export default class {
 }
 
 
+function addUser(rating, user) {
+    let flag = true;
+    for (let i = 0; i < rating.length; i++) {
+        if (rating[i].name === user.name) {
+            rating[i].points = user.points;
+
+            flag = false;
+            break;
+        }
+    }
+
+    if (flag) {
+        rating.push(user);
+    }
+
+    return rating;
+}
 

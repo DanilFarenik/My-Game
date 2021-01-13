@@ -176,3 +176,19 @@ body{
         font-size: 20px;
 	}
 }
+
+.fprm-login{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+
+    margin: 15% auto;
+
+    &__input{
+
+    }   
+
+    &__btn{
+        width: 400px;
+    }
+}
