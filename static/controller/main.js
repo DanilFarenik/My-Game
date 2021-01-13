@@ -14,8 +14,9 @@ import fieldCleaning from "../view/fieldCleaning.js";
 const start = document.getElementById("start");
 const newGame = document.getElementById("new-game");
 const points = document.getElementById("points");
-const submit = document.getElementById("submit")
-const name = document.getElementById("name")
+const submit = document.getElementById("submit");
+const name = document.getElementById("name");
+const notSubmit = document.getElementById("notSubmit");
 
 
 let game = new Game();
@@ -48,7 +49,7 @@ function gameRestart() {
     flag = true;
 
     points.value = 0;
-    name.value = "";
+    //name.value = "";
 }
 
 
@@ -80,6 +81,14 @@ submit.addEventListener("click", () => {
     dataRetrieval.setRating(userName, Number(points.value));
 
     drawingTable(dataRetrieval.names);
+
+    modalWindow.close();
+
+    gameRestart();
+
+})
+
+notSubmit.addEventListener("click", () => {
 
     modalWindow.close();
 
