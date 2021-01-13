@@ -34,14 +34,18 @@ app.use(express.static('static'));
 
 
 app.get('/logout', function (req, res) {
-    res.clearCookie('isAuth')
+    res.clearCookie('isAuth');
 
     res.json({ url: 'http://localhost:3000' });
 })
 
 
 app.get('/login', function (req, res) {
-    res.sendFile(path.join(__dirname, "/static/login.html"))
+    if (!req.cookies.isAuth) {
+        res.sendFile(path.join(__dirname, "/static/login.html"))
+    } else {
+        res.redirect('/')
+    }
 })
 
 
