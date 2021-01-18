@@ -98,6 +98,23 @@ body{
 
 .main{
 
+    &__user{
+        text-align: center;
+    }
+
+    &__user-statistics{
+        text-transform: uppercase;
+        color: #777777;
+
+        display: block;
+
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+
+        margin-top: 20px;
+    }
+
     &__playing-field{
         position: relative;
 
@@ -109,10 +126,19 @@ body{
     }
 
     &__left-bar{
+        display: flex;
+
+        flex-direction: column;
+
         background-color: #ffffff;
     }
 
+    &__gag{
+        margin: auto;
+    }
+
     &__table{
+        margin:0 auto;
 
         th{
             text-transform: uppercase;
@@ -179,16 +205,23 @@ body{
 
 .fprm-login{
     width: 400px;
+
     display: flex;
     flex-direction: column;
 
-    margin: 15% auto;
 
-    &__input{
 
+    margin: 5% auto;
+
+    &__error-list{
+        color:#ff0000;
     }   
 
     &__btn{
         width: 400px;
     }
+}
+
+.none{
+    display: none;
 }

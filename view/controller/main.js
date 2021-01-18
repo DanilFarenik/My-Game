@@ -1,12 +1,10 @@
 import './entrance.js';
 
-import Data from "../model/nameData.js";
+import Data from "../model/userData.js";
 import Timer from "./timer.js";
-import Modal from "../view/modalWindow.js"
+import Modal from "../view/modalWindow.js";
 import Game from "./gameLogic.js";
-
 import drawingTable from "../view/drawingTable.js"
-//import valid from "./nameValidator.js";
 import timerRes from "../view/timeRestart.js";
 import fieldCleaning from "../view/fieldCleaning.js";
 
@@ -17,6 +15,7 @@ const points = document.getElementById("points");
 const submit = document.getElementById("submit");
 const name = document.getElementById("name");
 const notSubmit = document.getElementById("notSubmit");
+const userStat = document.getElementById("userStat");
 
 
 let game = new Game();
@@ -24,17 +23,19 @@ let timeSet = new Timer();
 const dataRetrieval = new Data();
 const modalWindow = new Modal();
 
-const userName = dataRetrieval.getName();
+let flagStart = true;
+let flag = true;
 
-name.value = userName;
 
 dataRetrieval.getRating().then(res => {
-    drawingTable(res);
+    drawingTable(res.records);
+
+    name.value = res.user.name;
+
+    userStat.innerHTML = `${res.user.name}: ${res.user.points}`;
 })
 
 
-let flagStart = true;
-let flag = true;
 
 function gameRestart() {
     timerRes();
@@ -49,7 +50,6 @@ function gameRestart() {
     flag = true;
 
     points.value = 0;
-    //name.value = "";
 }
 
 
@@ -78,14 +78,20 @@ start.addEventListener("click", () => {
 
 submit.addEventListener("click", () => {
 
-    dataRetrieval.setRating(userName, Number(points.value));
+    dataRetrieval.setRating(Number(points.value)).then(() => {
 
-    drawingTable(dataRetrieval.names);
+        dataRetrieval.getRating().then(res => {
+            drawingTable(res.records);
+
+            name.value = res.user.name;
+
+            userStat.innerHTML = `${res.user.name}: ${res.user.points}`;
+        })
+    });
 
     modalWindow.close();
 
     gameRestart();
-
 })
 
 notSubmit.addEventListener("click", () => {
