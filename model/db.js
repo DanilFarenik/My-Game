@@ -40,17 +40,6 @@ module.exports.connectDb = () => {
             isThereCollectionUser();
 
             resolve()
-            //module.exports.getRecords()
-            // module.exports.setRecords("6002fe8c0050752cf46cb5f9", 132)
-            //module.exports.getUser("6002fe8c0050752cf46cb5f9")
-
-            //module.exports.getUsers("Danil123")
-            //module.exports.setUser({ ip: "123/3232/23/23/", login: "Dani", name: "qwesdasd", password: "efe7082f25791b81c6f91e73e344ead33c6f9849de34c1e932f06ff14f9ce1a8" })
-            /*  .then(res => {
-                 console.log(res, "oooooooooookkkkkkkkkkkk");
-             }).catch(err => {
-                 console.log(err, "ERRRRRRRRRRRRRRRRRRRRRRRRRRORO");
-             }) */
         })
     })
 }
@@ -114,7 +103,6 @@ module.exports.setUser = ({ ip, login, name, password, points = 0 }) => {
     })
 }
 
-//-------------------------------------------
 
 module.exports.getUser = (id) => {
     try {
@@ -163,8 +151,6 @@ module.exports.setRecords = (id, points) => {
         });
     })
 }
-
-//----------------------------------------
 
 
 module.exports.dbClose = () => {
