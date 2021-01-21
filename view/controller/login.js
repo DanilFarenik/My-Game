@@ -39,7 +39,7 @@ formRegister.addEventListener("submit", (e) => {
         password: e.target[2].value,
     }
 
-    connect(data, 'http://localhost:3097/register')
+    connect(data, 'http://localhost:3000/register')
         .then(res => {
             if (res.status === 300) {
                 window.location.replace(res.json().url);
@@ -70,7 +70,7 @@ formLogin.addEventListener("submit", (e) => {
         password: e.target[1].value,
     }
 
-    connect(data, 'http://localhost:3097/login')
+    connect(data, 'http://localhost:3000/login')
         .then(res => {
             if (res.status === 300) {
                 res.json();

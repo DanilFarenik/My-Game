@@ -1,5 +1,5 @@
 export default function () {
-    fetch("http://localhost:3097/logout")
+    fetch("http://localhost:3000/logout")
         .then(res => res.json())
         .then(res => {
             window.location.replace(res.url);

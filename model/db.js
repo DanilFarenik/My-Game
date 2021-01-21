@@ -1,5 +1,9 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
+const cipher = require('../controller/cipher');
+
+
+
 const dbURI = 'mongodb+srv://server:server@supercluster.n6zx8.mongodb.net/test?retryWrites=true&w=majority';
 
 const collectionNameUser = "users";
@@ -7,18 +11,30 @@ const collectionNameUser = "users";
 let db;
 let client;
 
+
+const mainAdmin = {
+    ip: '123.123.43.32',
+    login: 'admin123',
+    name: 'Admin',
+    password: cipher.getHash('qwe123qwe'),
+    role: 'admin',
+}
+
+
 const userValidator = {
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ["ip", "login", "name", "password", "date", "points"],
+            required: ["ip", "login", "name", "password", "date", "points", "games", "role"],
             properties: {
                 ip: { bsonType: "string" },
                 login: { bsonType: "string" },
                 name: { bsonType: "string" },
                 password: { bsonType: "string" },
                 points: { bsonType: "number", minimum: 0, maximum: 1000 },
-                date: { bsonType: "date" }
+                date: { bsonType: "date" },
+                games: { bsonType: "number", minimum: 0 },
+                role: { bsonType: "string" },
             }
         }
     },
@@ -43,6 +59,8 @@ module.exports.connectDb = () => {
         })
     })
 }
+
+
 const isThereCollectionUser = () => {
     db.listCollections().toArray((error, collections) => {
         if (error) {
@@ -71,7 +89,10 @@ const isThereCollectionUser = () => {
                 console.log('User collection created ');
             })
 
-            db.collection(collectionNameUser).createIndex({ login: 1 }, { unique: true })
+            db.collection(collectionNameUser).createIndex({ login: 1 }, { unique: true });
+
+
+            setUser(mainAdmin);
         } else {
             console.log('User collection found')
         }
@@ -79,29 +100,78 @@ const isThereCollectionUser = () => {
 }
 
 
-module.exports.getUsers = (login) => {
+module.exports.thisIsAdmin = async (id) => {
+    return await db.collection(collectionNameUser).findOne(
+        { _id: ObjectId(id) },
+        { projection: { _id: 0, role: 1 } }
+    );
+}
+
+
+module.exports.numberPages = async (reg = '') => {
+    return await db.collection(collectionNameUser).find({
+        $or: [
+            { login: { $regex: `${reg}` } },
+            { name: { $regex: `${reg}` } }
+        ]
+    }).count()
+}
+
+
+module.exports.admin_getUserData = async ({ page, sortField, reg }) => {
+    return await db.collection(collectionNameUser).find({
+        $or: [
+            { login: { $regex: `${reg}` } },
+            { name: { $regex: `${reg}` } }
+        ]
+    }, {
+        projection: {
+            _id: 1,
+            name: 1,
+            points: 1,
+            ip: 1,
+            login: 1,
+            date: 1,
+            games: 1,
+            role: 1,
+        },
+    })
+        .sort({ [sortField]: sortField === 'name' ? 1 : -1 })
+        .skip(page * 10)
+        .limit(10);
+}
+
+
+module.exports.getUsersLogin = (login) => {
     return db.collection(collectionNameUser).findOne({
-        login: login
+        login: login,
     })
 }
 
 
-module.exports.setUser = ({ ip, login, name, password, points = 0 }) => {
+
+
+function setUser({ ip, login, name, password, role = "player" }) {
     return new Promise((resolve, reject) => {
         db.collection(collectionNameUser).insertOne({
             ip: ip,
             login: login,
             name: name,
             password: password,
-            points: points,
+            points: 0,
             date: new Date(),
+            games: 0,
+            role: role,
         }, (err, res) => {
             if (err) reject(err);
 
-            resolve(res)
+            resolve(res);
         })
     })
 }
+
+
+module.exports.setUser = setUser;
 
 
 module.exports.getUser = (id) => {
@@ -112,7 +182,8 @@ module.exports.getUser = (id) => {
             projection: {
                 _id: 0,
                 name: 1,
-                points: 1
+                role: 1,
+                points: 1,
             }
         })
     } catch (err) {
@@ -144,11 +215,17 @@ module.exports.getRecords = () => {
 
 module.exports.setRecords = (id, points) => {
     return new Promise((resolve, reject) => {
-        db.collection(collectionNameUser).updateOne({ _id: ObjectId(id) }, { $set: { points: points } }, function (err, result) {
-            if (err) reject(err);
+        db.collection(collectionNameUser).updateOne(
+            { _id: ObjectId(id) },
+            {
+                $set: { points: points },
+                $inc: { games: 1 }
+            },
+            function (err, result) {
+                if (err) reject(err);
 
-            resolve(result)
-        });
+                resolve(result)
+            });
     })
 }
 

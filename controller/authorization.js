@@ -6,7 +6,7 @@ const cipher = require('./cipher');
 const handler = require('./validaror')
 
 
-const url = `http://localhost:3097`
+const url = `http://localhost:3000`
 
 
 module.exports.mainRoute = function (req, res) {
@@ -36,7 +36,7 @@ module.exports.loginСheck = function (req, res) {
 
 module.exports.login = function (req, res) {
 
-    dbInterface.getUsers(req.body.login.trim()).then(result => {
+    dbInterface.getUsersLogin(req.body.login.trim()).then(result => {
 
         if (!req.body.password) {
             res.status(400);

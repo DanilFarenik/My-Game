@@ -1,7 +1,7 @@
 
 const dbInterface = require('../model/db');
 
-const url = `http://localhost:3097`;
+const url = `http://localhost:3000`;
 
 
 module.exports.getRecords = function (req, res) {
@@ -9,10 +9,16 @@ module.exports.getRecords = function (req, res) {
     Promise.all([dbInterface.getRecords(), dbInterface.getUser(req.cookies.isAuth)])
         .then(([records, user]) => {
 
-            res.json({
-                records: records,
-                user: user
-            });
+            if (user === null) {
+                res.clearCookie('isAuth');
+
+                res.json({ error: `server access problem.`, url: url })
+            } else {
+                res.json({
+                    records: records,
+                    user: user
+                });
+            }
 
         }).catch(err => {
             res.clearCookie('isAuth');

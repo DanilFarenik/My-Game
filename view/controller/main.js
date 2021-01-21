@@ -14,8 +14,8 @@ const newGame = document.getElementById("new-game");
 const points = document.getElementById("points");
 const submit = document.getElementById("submit");
 const name = document.getElementById("name");
-const notSubmit = document.getElementById("notSubmit");
 const userStat = document.getElementById("userStat");
+const admin = document.getElementById("admin");
 
 
 let game = new Game();
@@ -25,14 +25,18 @@ const modalWindow = new Modal();
 
 let flagStart = true;
 let flag = true;
-
+let lastPoints;
 
 dataRetrieval.getRating().then(res => {
     drawingTable(res.records);
 
     name.value = res.user.name;
 
+    lastPoints = res.user.points;
+
     userStat.innerHTML = `${res.user.name}: ${res.user.points}`;
+
+    if (res.user.role === 'admin') admin.classList.remove('none');
 })
 
 
@@ -78,26 +82,24 @@ start.addEventListener("click", () => {
 
 submit.addEventListener("click", () => {
 
-    dataRetrieval.setRating(Number(points.value)).then(() => {
+    if (Number(points.value) <= lastPoints) {
 
-        dataRetrieval.getRating().then(res => {
-            drawingTable(res.records);
+        dataRetrieval.setRating(Number(lastPoints));
 
-            name.value = res.user.name;
+    } else {
+        dataRetrieval.setRating(Number(points.value)).then(() => {
 
-            userStat.innerHTML = `${res.user.name}: ${res.user.points}`;
-        })
-    });
+            dataRetrieval.getRating().then(res => {
+                drawingTable(res.records);
+
+                name.value = res.user.name;
+
+                userStat.innerHTML = `${res.user.name}: ${res.user.points}`;
+            })
+        });
+    }
 
     modalWindow.close();
 
     gameRestart();
-})
-
-notSubmit.addEventListener("click", () => {
-
-    modalWindow.close();
-
-    gameRestart();
-
 })

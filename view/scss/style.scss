@@ -225,3 +225,30 @@ body{
 .none{
     display: none;
 }
+
+.user-table{
+    th{
+        text-transform: uppercase;
+        text-align: center;
+        padding: 10px;
+    }
+    td{
+        text-align: center;
+        padding: 10px;
+    }
+}
+
+.header-admin{
+    &__select{
+        width: 100px;
+    }
+}
+
+.footer-admin{
+    &__input{
+        width: 30px;
+        margin-top: 20px;
+
+        text-align: center;
+    }
+}

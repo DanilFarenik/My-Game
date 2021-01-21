@@ -1,4 +1,32 @@
 
+module.exports.adminParameter = ({ reg = '', sortField = 'name', page = 0 }, fullPage) => {
+    const answer = { err: '' };
+
+    if (reg.trim().length > 15 || typeof reg !== "string") {
+        answer.status = true;
+        answer.err += "the sort field is invalid\n";
+    }
+
+    if (sortField !== "name" && sortField !== "points" && sortField !== "games" || typeof sortField !== "string") {
+        answer.status = true;
+        answer.err += "the sort field is invalid\n";
+    }
+
+    if (page < 0 || typeof page !== "number") {
+        answer.status = true;
+        answer.err += "incorrect page data\n";
+    }
+
+    if (answer.status) return answer;
+
+    return {
+        reg: reg,
+        sortField: sortField,
+        page: page > fullPage ? 0 : page,
+        status: false
+    }
+}
+
 
 module.exports.sanitize = function ({ name, login, password }, ip) {
     const data = {}

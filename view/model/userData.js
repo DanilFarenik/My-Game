@@ -6,7 +6,8 @@ export default class {
 
 
     getRating() {
-        return fetch("http://localhost:3097/getRecords").then(res => {
+        return fetch("http://localhost:3000/get/records").then(res => {
+
             if (res.status === 500) {
                 alert(`ERROR: the server does not respond`)
 
@@ -16,8 +17,6 @@ export default class {
             }
 
         }).then(res => {
-
-            console.log(res);
 
             if (res.url) {
                 alert(`ERROR: invalid authorization key`)
@@ -40,7 +39,7 @@ export default class {
         }
 
 
-        return fetch("http://localhost:3097/setRecords", {
+        return fetch("http://localhost:3000/set/records", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'

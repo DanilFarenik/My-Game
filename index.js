@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 
 const authorizationController = require("./controller/authorization");
 const dataRecords = require("./controller/records");
+const admin = require("./controller/admin");
 
 const dbInterface = require('./model/db');
 
@@ -12,9 +13,7 @@ const dbInterface = require('./model/db');
 
 const app = express();
 
-const port = 3097;
-
-//const url = `http://localhost:${port}`
+const port = 3000;
 
 
 app.use(cookieParser())
@@ -41,10 +40,16 @@ app.post('/login', authorizationController.login);
 app.post('/register', authorizationController.register)
 
 
-app.get('/getRecords', dataRecords.getRecords);
+app.get('/get/records', dataRecords.getRecords);
 
 
-app.post('/setRecords', dataRecords.setRecords);
+app.post('/set/records', dataRecords.setRecords);
+
+
+app.get('/admin', admin.getPage);
+
+
+app.post('/admin', admin.getUsersData);
 
 
 app.get('**', function (req, res) {
@@ -55,7 +60,7 @@ app.get('**', function (req, res) {
 dbInterface.connectDb().then(() => {
 
     app.listen(port, () => {
-        console.log(`Example app listening http://localhost:3097`)
+        console.log(`Example app listening http://localhost:3000`)
     });
 
 }).catch(err => {
