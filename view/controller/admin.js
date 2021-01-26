@@ -1,4 +1,4 @@
-import adminData from '../model/adminModel.js';
+import adminData, { changeOfStatus } from '../model/adminModel.js';
 import rendering from '../view/userTable.js';
 
 
@@ -8,6 +8,8 @@ const sortName = document.getElementById("sortName");
 const next = document.getElementById("next");
 const previous = document.getElementById("previous");
 const currentPage = document.getElementById("currentPage");
+
+const table = document.getElementById("table");
 
 
 let answer = {}
@@ -43,6 +45,40 @@ function getUser(options) {
     })
 }
 
+
+function replaceRole(password, id, role) {
+    changeOfStatus(
+        password,
+        id,
+        role === 'admin' ? false : true
+    ).then(res => {
+        if (res.url) {
+
+            window.location.replace(res.url);
+
+        } else if (res.error) {
+
+            alert(res.error)
+
+        } else {
+
+            getUser(options)
+
+        }
+    })
+}
+
+
+table.addEventListener('click', (e) => {
+    if (e.target.localName === 'button') {
+        const password = prompt("enter password");
+
+
+        if (password) {
+            replaceRole(password, e.target.getAttribute('data-id'), e.target.getAttribute('data-role'))
+        }
+    }
+})
 
 sort.addEventListener('click', () => {
     options.reg = sortName.value;

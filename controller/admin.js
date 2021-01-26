@@ -23,6 +23,23 @@ function thisIsAdmin(req, res) {
 }
 
 
+module.exports.changeOfStatus = (req, res) => {
+    thisIsAdmin(req, res).then(result => {
+        if (result) {
+
+            replaseStatus(req, res);
+
+        } else {
+
+            res.json({ url: url });
+
+        }
+    }).catch(err => {
+        res.json({ url: url });
+    })
+}
+
+
 module.exports.getPage = (req, res) => {
     thisIsAdmin(req, res).then(result => {
         if (result) {
@@ -66,6 +83,43 @@ module.exports.getUsersData = (req, res) => {
     })
 
 }
+
+
+function replaseStatus(req, res) {
+    return dbInterface.thisIsAdmin(req.body.id).then(result => {
+
+        if (result === null) {
+
+            res.status(400);
+            res.json({ error: 'User not found' });
+
+        } else if (req.body.password === 'qwe123qwe') {
+
+            dbInterface.replaseStatus(req.body).then(result => {
+
+                res.json({ ok: true })
+
+            }).catch(err => {
+
+                res.status(500)
+                res.json({ error: 'Server error' });
+
+            })
+
+        } else {
+            res.json({
+                error: 'Access denied'
+            });
+        }
+    }).catch((err) => {
+
+        res.status(500)
+        res.json({ error: 'Server error' });
+
+    })
+
+}
+
 
 function dataCollection(data) {
     return dbInterface.numberPages(data.reg).then(result => {

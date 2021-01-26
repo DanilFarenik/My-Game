@@ -100,6 +100,18 @@ const isThereCollectionUser = () => {
 }
 
 
+module.exports.replaseStatus = ({ id, roleFlag }) => {
+    return db.collection(collectionNameUser).updateOne(
+        { _id: ObjectId(id) },
+        {
+            $set: {
+                role: roleFlag ? 'admin' : 'player'
+            }
+        }
+    )
+}
+
+
 module.exports.thisIsAdmin = async (id) => {
     return await db.collection(collectionNameUser).findOne(
         { _id: ObjectId(id) },

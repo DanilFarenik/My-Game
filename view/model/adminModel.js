@@ -20,3 +20,18 @@ export default function (options) {
             return res;
         })
 }
+
+
+export function changeOfStatus(password, id, roleFlag) {
+    return fetch('http://localhost:3000/admin/change', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            id: id,
+            password: password,
+            roleFlag: roleFlag
+        })
+    }).then(res => res.json())
+}

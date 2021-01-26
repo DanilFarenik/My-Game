@@ -10,7 +10,6 @@ const admin = require("./controller/admin");
 const dbInterface = require('./model/db');
 
 
-
 const app = express();
 
 const port = 3000;
@@ -50,6 +49,9 @@ app.get('/admin', admin.getPage);
 
 
 app.post('/admin', admin.getUsersData);
+
+
+app.post('/admin/change', admin.changeOfStatus);
 
 
 app.get('**', function (req, res) {
