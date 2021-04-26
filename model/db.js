@@ -64,7 +64,7 @@ module.exports.connectDb = () => {
 const isThereCollectionUser = () => {
     db.listCollections().toArray((error, collections) => {
         if (error) {
-            console.log(`ERROR: ${err.message}`);
+            (`ERROR: ${err.message}`);
             throw err;
         }
 
@@ -78,15 +78,15 @@ const isThereCollectionUser = () => {
 
 
         if (collectionFlag) {
-            console.log('User collection not found');
+            ('User collection not found');
 
             db.createCollection(collectionNameUser, userValidator, (err, res) => {
                 if (err) {
-                    console.log(`ERROR: ${err.message}`);
+                    (`ERROR: ${err.message}`);
                     throw err;
                 }
 
-                console.log('User collection created ');
+                ('User collection created ');
             })
 
             db.collection(collectionNameUser).createIndex({ login: 1 }, { unique: true });
@@ -94,7 +94,7 @@ const isThereCollectionUser = () => {
 
             setUser(mainAdmin);
         } else {
-            console.log('User collection found')
+            ('User collection found')
         }
     });
 }

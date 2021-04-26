@@ -4,7 +4,7 @@ const path = require('path');
 const dbInterface = require('../model/db');
 const validator = require('./validaror');
 
-const url = `http://localhost:3000`
+const url = `http://localhost:3001`
 
 
 function thisIsAdmin(req, res) {

@@ -1,7 +1,7 @@
 
 
 export default function (options) {
-    return fetch('http://localhost:3000/admin', {
+    return fetch('http://localhost:3001/admin', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -23,7 +23,7 @@ export default function (options) {
 
 
 export function changeOfStatus(password, id, roleFlag) {
-    return fetch('http://localhost:3000/admin/change', {
+    return fetch('http://localhost:3001/admin/change', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'

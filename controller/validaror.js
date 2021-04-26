@@ -45,7 +45,7 @@ module.exports.validator = function ({ name, login, password }) {
 
     fieldValidator(name, "name", new RegExp(/^[A-Za-z][A-Za-z0-9_]{5,15}$/), err, "is not valid. A-z 0-9.Length 5-15 characters");
 
-    fieldValidator(login, "login", new RegExp(/^[a-z0-9]{5,15}$/), err, "login must contain only small Latin letters and numbers.Length 5-15 characters");
+    fieldValidator(login, "login", new RegExp(/^[a-z@.]{2,15}$/), err, "login must contain only small Latin letters and numbers.Length 5-15 characters");
 
     fieldValidator(password, "password", new RegExp(/^[a-zA-Z0-9]{8,15}$/), err, "password must be between 8 and 20 characters, A-z 0-9");
 
